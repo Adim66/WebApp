@@ -21,8 +21,8 @@ public class UserService {
     @Transactional
     public User registerUser(User user) throws Exception {
         System.out.println("Registering user: " + user);
-        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
-        if (existingUser.isPresent()) {
+        User existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser != null) {
             throw new Exception("Username already exists");
         }
 
@@ -32,16 +32,34 @@ public class UserService {
 
 
     public User loginUser(String username, String password) throws Exception {
-        Optional<User> existingUser = userRepository.findByUsername(username);
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            if (passwordEncoder.matches(password, user.getPassword())) {
-                return user;
+        User existingUser = userRepository.findByUsername(username);
+        if (existingUser != null) {
+            if (passwordEncoder.matches(password, existingUser.getPassword())) {
+                return existingUser;
             } else {
                 throw new Exception("Invalid password");
             }
         } else {
             throw new Exception("User not found");
         }
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public void saveUserImage(String username, byte[] imageBytes) {
+        // Récupérer l'utilisateur par son nom d'utilisateur
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+
+        // Mettre à jour l'image de l'utilisateur
+        user.setImage(imageBytes);
+
+        // Sauvegarder les modifications dans la base de données
+        userRepository.save(user);
     }
 }

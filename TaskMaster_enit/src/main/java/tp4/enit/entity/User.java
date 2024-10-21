@@ -15,16 +15,19 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+    @Lob // Utilisé pour stocker des données de type BLOB
+    private byte[] image;
 
     // Constructors
     public User() {}
 
-    public User(String fullName, String username, String email, String phoneNumber, String password) {
+    public User(String fullName, String username, String email, String phoneNumber, String password, byte[] image) {
         this.fullName = fullName;
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.image = image;
     }
 
     // Getters and Setters
@@ -76,6 +79,13 @@ public class User {
         this.password = password;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) { // Méthode setImage
+        this.image = image;
+    }
 }
 
 
