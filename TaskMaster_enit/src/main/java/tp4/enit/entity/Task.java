@@ -17,8 +17,8 @@ public class Task {
 
     private String name;
     private String description;
-    private Boolean completed;
-    private LocalDate dueDate;
+    private Double price;      // Nouveau champ pour le prix
+    private String imageUrl;   // Nouveau champ pour l'URL de l'image
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")

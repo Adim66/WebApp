@@ -45,8 +45,8 @@ public class TaskController {
         if (taskOptional.isPresent()) {
             Task updatedTask = taskOptional.get();
             updatedTask.setDescription(task.getDescription());
-            updatedTask.setDueDate(task.getDueDate());
-            updatedTask.setCompleted(task.getCompleted());
+            updatedTask.setPrice(task.getPrice());
+            updatedTask.setImageUrl(task.getImageUrl());
             updatedTask.setName(task.getName());
             return ResponseEntity.ok(taskService.saveTask(updatedTask));
         } else {

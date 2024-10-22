@@ -1,5 +1,6 @@
 package tp4.enit.controller;
 
+import org.springframework.http.HttpStatus;
 import tp4.enit.entity.Project;
 import tp4.enit.entity.Task;
 import tp4.enit.service.ProjectService;
@@ -35,8 +36,9 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
-        return projectService.saveProject(project);
+    public ResponseEntity<Project> createProject(@RequestBody Project project) {
+        Project createdProject = projectService.saveProject(project);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProject);
     }
 
     @PutMapping("/{id}")
